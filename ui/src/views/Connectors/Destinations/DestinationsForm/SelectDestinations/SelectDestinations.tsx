@@ -7,8 +7,14 @@ import ContentContainer from '@/components/ContentContainer';
 import { ALL_DESTINATIONS_CATEGORY } from '@/views/Connectors/constant';
 import { Connector } from '@/views/Connectors/types';
 import { SteppedFormContext } from '@/components/SteppedForm/SteppedForm';
+<<<<<<< HEAD
+=======
+import useQueryWrapper from '@/hooks/useQueryWrapper';
+import { useStore } from '@/stores';
+>>>>>>> 0b1ba760 (feat(EE): updated postgres to AIS Datastore (#184))
 
 const SelectDestinations = (): JSX.Element => {
+  const activeWorkspaceId = useStore.getState().workspaceId;
   const { stepInfo, handleMoveForward } = useContext(SteppedFormContext);
   const [selectedCategory, setSelectedCategory] = useState<string>(ALL_DESTINATIONS_CATEGORY);
   const { data } = useQuery({
@@ -94,7 +100,11 @@ const SelectDestinations = (): JSX.Element => {
                     backgroundColor='gray.100'
                   >
                     <Image
-                      src={connector.icon}
+                      src={
+                        +activeWorkspaceId === 18 && connector.title?.toLowerCase() === 'postgresql'
+                          ? 'https://squared.ai/wp-content/uploads/2024/03/apple-touch-icon.png'
+                          : connector.icon
+                      }
                       alt='source icon'
                       maxHeight='100%'
                       height='24px'
@@ -102,7 +112,9 @@ const SelectDestinations = (): JSX.Element => {
                     />
                   </Box>
                   <Text fontWeight='semibold' size='sm'>
-                    {connector.title}
+                    {+activeWorkspaceId === 18 && connector.title?.toLowerCase() === 'postgresql'
+                      ? 'AIS Datastore'
+                      : connector.title}
                   </Text>
                 </Box>
               ) : null,

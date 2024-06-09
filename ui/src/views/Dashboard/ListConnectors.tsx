@@ -13,6 +13,7 @@ import EntityItem from '@/components/EntityItem';
 import { ConnectorItem } from '../Connectors/types';
 import { useState } from 'react';
 import NoConnectorsFound from '@/assets/images/empty-state-illustration.svg';
+import { useStore } from '@/stores';
 
 import Pagination from '@/components/Pagination';
 
@@ -53,6 +54,7 @@ const ListConnectors = ({
   connectorsList?: ConnectorItem[];
   filteredConnectorsList?: ConnectorItem[];
 }): JSX.Element => {
+  const activeWorkspaceId = useStore.getState().workspaceId;
   const [currentPage, setCurrentPage] = useState(1);
 
   // Calculate the start and end index of the items to display for the current page
@@ -179,7 +181,15 @@ const ListConnectors = ({
                     handleCheckboxChange(checked, connector.id)
                   }
                 />
-                <EntityItem icon={connector?.attributes?.icon} name={connector?.attributes?.name} />
+                <EntityItem
+                  icon={
+                    +activeWorkspaceId === 18 &&
+                    connector?.attributes?.name?.toLowerCase() === 'supabase'
+                      ? 'https://squared.ai/wp-content/uploads/2024/03/apple-touch-icon.png'
+                      : connector?.attributes?.icon
+                  }
+                  name={connector?.attributes?.name}
+                />
               </Box>
             ))}
           </Stack>

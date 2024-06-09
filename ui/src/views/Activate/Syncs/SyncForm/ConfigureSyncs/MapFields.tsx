@@ -143,11 +143,21 @@ const MapFields = ({
       marginBottom={isEdit ? '20px' : '100px'}
     >
       <Text fontWeight={600} size='md'>
-        Map fields to {destination?.attributes?.connector_name}
+        Map fields to{' '}
+        {+activeWorkspaceId === 18 &&
+        destination.attributes.connector_name.toLowerCase() === 'postgresql'
+          ? 'AIS Datastore'
+          : destination.attributes.connector_name}
       </Text>
       <Text size='xs' mb={6} letterSpacing='-0.12px' fontWeight={400} color='black.200'>
-        {`Configure how the columns in your query results should be mapped to fields in ${destination.attributes.connector_name}.`}
+        {`Configure how the columns in your query results should be mapped to fields in ${
+          +activeWorkspaceId === 18 &&
+          destination.attributes.connector_name.toLowerCase() === 'postgresql'
+            ? 'AIS Datastore'
+            : destination.attributes.connector_name
+        }.`}
       </Text>
+
       {fields.map(({ isRequired = false }, index) => (
         <Box key={`field-map-${index}`} display='flex' alignItems='flex-end' marginBottom='30px'>
           <FieldMap
@@ -168,9 +178,12 @@ const MapFields = ({
             id={index}
             fieldType='destination'
 <<<<<<< HEAD
+<<<<<<< HEAD
             entityName={destination.attributes.connector_name}
             icon={destination.attributes.icon}
 =======
+=======
+>>>>>>> 0b1ba760 (feat(EE): updated postgres to AIS Datastore (#184))
             entityName={
               +activeWorkspaceId === 18 &&
               destination.attributes.connector_name.toLowerCase() === 'postgresql'
@@ -181,9 +194,14 @@ const MapFields = ({
               +activeWorkspaceId === 18 &&
               destination.attributes.connector_name.toLowerCase() === 'postgresql'
                 ? 'https://squared.ai/wp-content/uploads/2024/03/apple-touch-icon.png'
+<<<<<<< HEAD
                 : destination.attributes.icon
             }
 >>>>>>> 14215f5c (fix: handle error logs for API Failures (#189))
+=======
+                : destination.attributes.connector_name
+            }
+>>>>>>> 0b1ba760 (feat(EE): updated postgres to AIS Datastore (#184))
             options={destinationColumns}
             onChange={handleOnChange}
             isDisabled={!stream || isRequired}

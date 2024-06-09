@@ -77,10 +77,18 @@ const ViewSync = (): JSX.Element => {
                   name: syncData?.model.connector.name,
                   icon: syncData?.model.connector.icon,
                 }}
-                destination={{
-                  name: syncData?.destination.name,
-                  icon: syncData?.destination.icon,
-                }}
+                destination={
+                  +activeWorkspaceId === 18 &&
+                  syncData?.destination?.name?.toLowerCase() === 'supabase'
+                    ? {
+                        name: syncData?.destination.name,
+                        icon: 'https://squared.ai/wp-content/uploads/2024/03/apple-touch-icon.png',
+                      }
+                    : {
+                        name: syncData?.destination.name,
+                        icon: syncData?.destination.icon,
+                      }
+                }
               />
               <Divider
                 orientation='vertical'

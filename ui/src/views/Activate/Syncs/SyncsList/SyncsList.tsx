@@ -21,6 +21,8 @@ type TableItem = {
 };
 
 const TableItem = ({ field, data }: TableItem): JSX.Element => {
+  const activeWorkspaceId = useStore.getState().workspaceId;
+
   switch (field) {
     case 'model':
       return (
@@ -31,7 +33,13 @@ const TableItem = ({ field, data }: TableItem): JSX.Element => {
       );
 
     case 'destination':
-      return (
+      return +activeWorkspaceId === 18 &&
+        data.attributes.destination.connector_name.toLowerCase() === 'postgresql' ? (
+        <EntityItem
+          icon='https://squared.ai/wp-content/uploads/2024/03/apple-touch-icon.png'
+          name='AIS Datastore'
+        />
+      ) : (
         <EntityItem
           icon={data.attributes.destination.icon}
           name={data.attributes.destination.connector_name}

@@ -34,6 +34,7 @@ import Cookies from 'js-cookie';
 
 const Profile = () => {
   const activeWorkspaceId = useStore((state) => state.workspaceId);
+  // console.log(activeWorkspaceId);
 
   const { data } = useQueryWrapper<ProfileAPIResponse, Error>(
     ['users', 'profile', 'me', activeWorkspaceId],
@@ -58,6 +59,10 @@ const Profile = () => {
   const handleLogout = async () => {
     const logoutResponse = await logout();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    useStore.getState().clearState();
+>>>>>>> 0b1ba760 (feat(EE): updated postgres to AIS Datastore (#184))
     if (logoutResponse.data) {
 <<<<<<< HEAD
 =======
@@ -79,9 +84,15 @@ const Profile = () => {
         position: 'bottom-right',
       });
 <<<<<<< HEAD
+<<<<<<< HEAD
       navigate('/sign-in');
 =======
 >>>>>>> a24cff3b (fix(CE): sign in page reload on logout (#186))
+=======
+      // need to reset the state completely
+      navigate('/sign-in', { replace: true });
+      window.location.reload();
+>>>>>>> 0b1ba760 (feat(EE): updated postgres to AIS Datastore (#184))
     }
   };
 

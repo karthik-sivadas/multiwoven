@@ -14,6 +14,7 @@ import { CONNECTOR_LIST_COLUMNS } from '@/views/Connectors/constant';
 import EntityItem from '@/components/EntityItem';
 import Loader from '@/components/Loader';
 import StatusTag from '@/components/StatusTag';
+import { useStore } from '@/stores';
 
 type TableItem = {
   field: ConnectorTableColumnFields;
@@ -32,6 +33,7 @@ type DestinationTableProps = {
 };
 
 const TableItem = ({ field, attributes }: TableItem): JSX.Element => {
+  const activeWorkspaceId = useStore.getState().workspaceId;
   switch (field) {
     case 'name':
       return (
@@ -40,7 +42,15 @@ const TableItem = ({ field, attributes }: TableItem): JSX.Element => {
         </Text>
       );
     case 'icon':
-      return <EntityItem icon={attributes?.[field]} name={attributes?.connector_name} />;
+      return +activeWorkspaceId === 18 &&
+        attributes?.connector_name.toLowerCase() === 'postgresql' ? (
+        <EntityItem
+          icon='https://squared.ai/wp-content/uploads/2024/03/apple-touch-icon.png'
+          name='AIS Datastore'
+        />
+      ) : (
+        <EntityItem icon={attributes?.[field]} name={attributes?.connector_name} />
+      );
 
     case 'updated_at':
       return (

@@ -1,5 +1,6 @@
 import { DescriptionFieldProps, FormContextType, RJSFSchema, StrictRJSFSchema } from '@rjsf/utils';
 import { Text } from '@chakra-ui/react';
+import { useStore } from '@/stores';
 
 export default function DescriptionFieldTemplate<
   T = unknown,
@@ -9,6 +10,8 @@ export default function DescriptionFieldTemplate<
   if (!description) {
     return null;
   }
+
+  const activeWorkspaceId = useStore.getState().workspaceId;
 
   if (typeof description === 'string') {
     return (
@@ -22,7 +25,9 @@ export default function DescriptionFieldTemplate<
         lineHeight='b5'
         maxWidth='700px'
       >
-        {description}
+        {+activeWorkspaceId === 18
+          ? description.replace('PostgreSQL', 'AIS Datastore')
+          : description}
       </Text>
     );
   }

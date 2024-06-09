@@ -110,7 +110,12 @@ const SelectStreams = ({
       marginBottom='20px'
     >
       <Text fontWeight='600' mb={6} color='black.500' size='md'>
-        Configure sync to {destination.attributes.connector_name}.
+        Configure sync to{' '}
+        {+activeWorkspaceId === 18 &&
+        destination.attributes.connector_name.toLowerCase() === 'postgresql'
+          ? 'AIS Datastore'
+          : destination.attributes.connector_name}
+        .
       </Text>
       <Box display='flex' alignItems='flex-end' gap='36px'>
         <Box width='100%'>

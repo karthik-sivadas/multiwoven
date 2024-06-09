@@ -156,7 +156,10 @@ const EditDestination = (): JSX.Element => {
       url: '/setup/destinations',
     },
     {
-      name: connectorName || '',
+      name:
+        +activeWorkspaceId === 18 && connectorName?.toLowerCase() === 'postgresql'
+          ? 'AIS Datastore'
+          : connectorName || '',
       url: '',
     },
   ];
@@ -169,14 +172,26 @@ const EditDestination = (): JSX.Element => {
     <Box width='100%' display='flex' justifyContent='center'>
       <ContentContainer>
         <TopBar
-          name={connectorName || ''}
+          name={
+            +activeWorkspaceId === 18 && connectorName?.toLowerCase() === 'postgresql'
+              ? 'AIS Datastore'
+              : connectorName || ''
+          }
           breadcrumbSteps={EDIT_DESTINATION_STEP}
           extra={
             <Box display='flex' alignItems='center'>
               <Box display='flex' alignItems='center'>
                 <EntityItem
-                  name={connectorInfo?.attributes?.connector_name || ''}
-                  icon={connectorInfo?.attributes?.icon || ''}
+                  name={
+                    +activeWorkspaceId === 18 && connectorName?.toLowerCase() === 'postgresql'
+                      ? 'AIS Datastore'
+                      : connectorName || ''
+                  }
+                  icon={
+                    +activeWorkspaceId === 18 && connectorName?.toLowerCase() === 'postgresql'
+                      ? 'https://squared.ai/wp-content/uploads/2024/03/apple-touch-icon.png'
+                      : connectorInfo?.attributes?.icon || ''
+                  }
                 />
               </Box>
               <Divider

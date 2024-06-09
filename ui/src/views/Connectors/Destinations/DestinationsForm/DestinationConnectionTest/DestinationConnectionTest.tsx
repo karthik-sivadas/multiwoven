@@ -39,7 +39,7 @@ const DestinationConnectionTest = (): JSX.Element | null => {
   const { forms } = state;
   const { maxContentWidth } = useUiConfig();
 
-  const selectedDestination = forms.find(({ stepKey }) => stepKey === 'destination')?.data
+  let selectedDestination = forms.find(({ stepKey }) => stepKey === 'destination')?.data
     ?.destination as string;
 
   const destinationConfigForm = forms.find(({ stepKey }) => stepKey === CONNECT_TO_DESTINATION_KEY);
@@ -51,6 +51,15 @@ const DestinationConnectionTest = (): JSX.Element | null => {
     [forms],
   );
 
+<<<<<<< HEAD
+=======
+  const activeWorkspaceId = useStore((state) => state.workspaceId);
+
+  if (+activeWorkspaceId === 18 && selectedDestination.toLowerCase() === 'postgresql') {
+    selectedDestination = 'AIS Datastore';
+  }
+
+>>>>>>> 0b1ba760 (feat(EE): updated postgres to AIS Datastore (#184))
   const {
     data: connectionResponse,
     refetch: retryDestinationConnection,

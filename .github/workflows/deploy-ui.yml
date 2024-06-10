@@ -25,6 +25,7 @@ jobs:
           repository: multiwoven/helm-charts
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       - name: Install Azure cli
         run: |
@@ -36,6 +37,17 @@ jobs:
           apt-get install azure-cli
 
 >>>>>>> 6e7f3391 (fix(EE): removing sudo from azure cli installation (#193))
+=======
+      - name: Install Azure cli
+        run: |
+          sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+          curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+          AZ_REPO=$(lsb_release -cs)
+          echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+          sudo apt-get update
+          sudo apt-get install azure-cli
+
+>>>>>>> b7d43621 (feat(EE): installing azure cli in self hosted runner (#192))
       - uses: azure/setup-helm@v4.2.0
         with:
           version: 'latest'

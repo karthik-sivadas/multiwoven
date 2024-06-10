@@ -15,6 +15,7 @@ import { CustomToastStatus } from '@/components/Toast/index';
 import useCustomToast from '@/hooks/useCustomToast';
 import { useQuery } from '@tanstack/react-query';
 import { FiLogOut, FiMoreVertical } from 'react-icons/fi';
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
@@ -24,12 +25,39 @@ const Profile = () => {
     refetchOnMount: true,
     refetchOnWindowFocus: false,
   });
+=======
+import { userIdStore } from '@/stores/userIdStore';
+import { useEffect } from 'react';
+import { useStore } from '@/stores';
+import useQueryWrapper from '@/hooks/useQueryWrapper';
+import Cookies from 'js-cookie';
+
+const Profile = () => {
+  const activeWorkspaceId = useStore((state) => state.workspaceId);
+
+  const { data } = useQueryWrapper<ProfileAPIResponse, Error>(
+    ['users', 'profile', 'me', activeWorkspaceId],
+    () => getUserProfile(),
+    {
+      refetchOnMount: true,
+      refetchOnWindowFocus: false,
+    },
+  );
+
+  const setActiveUserId = userIdStore((state) => state.setActiveUserId);
+
+  useEffect(() => {
+    if (data && data.data?.id) {
+      setActiveUserId(data.data?.id);
+    }
+  }, [data]);
+>>>>>>> a24cff3b (fix(CE): sign in page reload on logout (#186))
 
   const showToast = useCustomToast();
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     const logoutResponse = await logout();
+<<<<<<< HEAD
     if (logoutResponse.data) {
 <<<<<<< HEAD
 =======
@@ -37,6 +65,12 @@ const Profile = () => {
       Cookies.remove('authToken');
       useStore.getState().clearState();
 >>>>>>> 197a0649 (fix(CE): clear workspace state on logout (#196))
+=======
+
+    if (logoutResponse.data) {
+      window.location.href = '/sign-in';
+      Cookies.remove('authToken');
+>>>>>>> a24cff3b (fix(CE): sign in page reload on logout (#186))
       showToast({
         title: 'Signed out successfully',
         isClosable: true,
@@ -44,7 +78,10 @@ const Profile = () => {
         status: CustomToastStatus.Success,
         position: 'bottom-right',
       });
+<<<<<<< HEAD
       navigate('/sign-in');
+=======
+>>>>>>> a24cff3b (fix(CE): sign in page reload on logout (#186))
     }
   };
 

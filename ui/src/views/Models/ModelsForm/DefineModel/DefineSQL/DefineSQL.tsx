@@ -20,6 +20,7 @@ import { CustomToastStatus } from '@/components/Toast/index';
 import useCustomToast from '@/hooks/useCustomToast';
 import { format } from 'sql-formatter';
 import { autocompleteEntries } from './autocomplete';
+import titleCase from '@/utils/TitleCase';
 
 const DefineSQL = ({
   hasPrefilledValues = false,
@@ -79,37 +80,33 @@ const DefineSQL = ({
     const query = editorRef.current?.getValue() as string;
     const response = await getModelPreviewById(query, connector_id?.toString());
 <<<<<<< HEAD
+<<<<<<< HEAD
     if ('data' in response && response.data.errors) {
       response.data.errors.forEach((error: { title: string; detail: string }) => {
 =======
     if ('errors' in response) {
       response.errors?.forEach((error) => {
 >>>>>>> 1dfe46a8 (Fixed model query and page cache update issue (#185))
+=======
+
+    if ('errors' in response) {
+      response.errors?.forEach((error) => {
+>>>>>>> 14215f5c (fix: handle error logs for API Failures (#189))
         showToast({
-          title: error.detail,
-          description: error.detail || 'Please check your query and try again',
-          status: CustomToastStatus.Error,
-          duration: 9000,
+          duration: 5000,
           isClosable: true,
           position: 'bottom-right',
+          colorScheme: 'red',
+          status: CustomToastStatus.Warning,
+          title: titleCase(error.detail),
         });
       });
-      setTableData(null);
-    } else if ('data' in response && !response.data?.errors) {
-      showToast({
-        title: 'No data found',
-        status: CustomToastStatus.Error,
-        duration: 3000,
-        isClosable: true,
-        position: 'bottom-right',
-      });
-      setTableData(null);
+      setLoading(false);
     } else {
       setTableData(ConvertModelPreviewToTableData(response as Field[]));
       canMoveForward(true);
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   async function handleModelUpdate() {
@@ -135,6 +132,17 @@ const DefineSQL = ({
         position: 'bottom-right',
       });
       navigate('/define/models/' + prefillValues?.model_id || '');
+    } else {
+      modelUpdateResponse.errors?.forEach((error) => {
+        showToast({
+          duration: 5000,
+          isClosable: true,
+          position: 'bottom-right',
+          colorScheme: 'red',
+          status: CustomToastStatus.Warning,
+          title: titleCase(error.detail),
+        });
+      });
     }
   }
 

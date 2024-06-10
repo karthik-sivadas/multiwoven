@@ -38,7 +38,7 @@ const ViewSync = (): JSX.Element => {
     enabled: !!syncId,
   });
 
-  const syncData = syncFetchResponse?.data.attributes;
+  const syncData = syncFetchResponse?.data?.attributes;
 
   const EDIT_SYNC_FORM_STEPS: Step[] = [
     {

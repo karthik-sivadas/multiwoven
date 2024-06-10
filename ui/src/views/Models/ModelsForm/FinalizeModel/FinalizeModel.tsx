@@ -25,6 +25,7 @@ import SourceFormFooter from '@/views/Connectors/Sources/SourcesForm/SourceFormF
 import { CustomToastStatus } from '@/components/Toast/index';
 import useCustomToast from '@/hooks/useCustomToast';
 import ContentContainer from '@/components/ContentContainer';
+import titleCase from '@/utils/TitleCase';
 
 type ModelConfig = {
   id: number;
@@ -82,7 +83,16 @@ const FinalizeModel = (): JSX.Element => {
         });
         navigate('/define/models');
       } else {
-        throw new Error();
+        createConnectorResponse.errors?.forEach((error) => {
+          showToast({
+            duration: 5000,
+            isClosable: true,
+            position: 'bottom-right',
+            colorScheme: 'red',
+            status: CustomToastStatus.Warning,
+            title: titleCase(error.detail),
+          });
+        });
       }
     } catch {
       showToast({

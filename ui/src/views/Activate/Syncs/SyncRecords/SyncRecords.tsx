@@ -18,6 +18,12 @@ import useCustomToast from '@/hooks/useCustomToast';
 import { CustomToastStatus } from '@/components/Toast';
 import { SyncRecordStatus } from '../types';
 import { FilterTabs } from './FilterTabs';
+<<<<<<< HEAD
+=======
+import useQueryWrapper from '@/hooks/useQueryWrapper';
+import { ApiResponse } from '@/services/common';
+import { SyncRecordResponse } from '@/views/Activate/Syncs/types';
+>>>>>>> 14215f5c (fix: handle error logs for API Failures (#189))
 
 const SyncRecords = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,7 +47,7 @@ const SyncRecords = (): JSX.Element => {
   });
 
   const filteredRecords = useMemo(
-    () => syncRunRecords?.data.filter((record) => record.attributes.status === currentFilter),
+    () => syncRunRecords?.data?.filter?.((record) => record.attributes.status === currentFilter),
     [syncRunRecords, currentFilter],
   );
 

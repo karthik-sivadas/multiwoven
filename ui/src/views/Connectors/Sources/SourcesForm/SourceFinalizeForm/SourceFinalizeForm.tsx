@@ -11,6 +11,7 @@ import { SOURCES_LIST_QUERY_KEY } from '@/views/Connectors/constant';
 import ContentContainer from '@/components/ContentContainer';
 import { CustomToastStatus } from '@/components/Toast/index';
 import useCustomToast from '@/hooks/useCustomToast';
+import titleCase from '@/utils/TitleCase';
 
 const finalDataSourceFormKey = 'testSource';
 
@@ -58,7 +59,16 @@ const SourceFinalizeForm = (): JSX.Element | null => {
           });
           navigate('/setup/sources');
         } else {
-          throw new Error();
+          createConnectorResponse.errors?.forEach((error) => {
+            showToast({
+              duration: 5000,
+              isClosable: true,
+              position: 'bottom-right',
+              colorScheme: 'red',
+              status: CustomToastStatus.Warning,
+              title: titleCase(error.detail),
+            });
+          });
         }
       } catch {
         showToast({

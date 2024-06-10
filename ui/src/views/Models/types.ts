@@ -10,11 +10,9 @@ export type CreateModelPayload = {
 };
 
 export type CreateModelResponse = {
-  data: {
-    attributes: unknown;
-    id: string;
-    type: string;
-  };
+  attributes: unknown;
+  id: string;
+  type: string;
 };
 
 export type GetModelByIdResponse = {

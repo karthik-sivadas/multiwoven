@@ -12,6 +12,7 @@ import SourceFormFooter from '@/views/Connectors/Sources/SourcesForm/SourceFormF
 import ContentContainer from '@/components/ContentContainer';
 import { CustomToastStatus } from '@/components/Toast/index';
 import useCustomToast from '@/hooks/useCustomToast';
+import titleCase from '@/utils/TitleCase';
 
 const finalDestinationConfigFormKey = 'testDestination';
 
@@ -61,7 +62,16 @@ const DestinationFinalizeForm = (): JSX.Element | null => {
           });
           navigate('/setup/destinations');
         } else {
-          throw new Error();
+          createConnectorResponse.errors?.forEach((error) => {
+            showToast({
+              duration: 5000,
+              isClosable: true,
+              position: 'bottom-right',
+              colorScheme: 'red',
+              status: CustomToastStatus.Warning,
+              title: titleCase(error.detail),
+            });
+          });
         }
       } catch {
         showToast({

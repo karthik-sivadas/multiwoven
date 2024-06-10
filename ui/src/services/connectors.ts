@@ -7,7 +7,7 @@ import {
   TestConnectionPayload,
   TestConnectionResponse,
 } from '@/views/Connectors/types';
-import { apiRequest, multiwovenFetch } from './common';
+import { apiRequest, multiwovenFetch, ApiResponse } from './common';
 import { RJSFSchema } from '@rjsf/utils';
 
 type ConnectorsDefinationApiResponse = {
@@ -50,10 +50,8 @@ export const getConnectionStatus = async (payload: TestConnectionPayload) =>
     data: payload,
   });
 
-export const createNewConnector = async (
-  payload: CreateConnectorPayload,
-): Promise<CreateConnectorResponse> =>
-  multiwovenFetch<CreateConnectorPayload, CreateConnectorResponse>({
+export const createNewConnector = async (payload: CreateConnectorPayload) =>
+  multiwovenFetch<CreateConnectorPayload, ApiResponse<CreateConnectorResponse>>({
     method: 'post',
     url: '/connectors',
     data: payload,

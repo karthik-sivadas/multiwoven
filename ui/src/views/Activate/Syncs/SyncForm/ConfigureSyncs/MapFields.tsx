@@ -167,8 +167,23 @@ const MapFields = ({
           <FieldMap
             id={index}
             fieldType='destination'
+<<<<<<< HEAD
             entityName={destination.attributes.connector_name}
             icon={destination.attributes.icon}
+=======
+            entityName={
+              +activeWorkspaceId === 18 &&
+              destination.attributes.connector_name.toLowerCase() === 'postgresql'
+                ? 'AIS Datastore'
+                : destination.attributes.connector_name
+            }
+            icon={
+              +activeWorkspaceId === 18 &&
+              destination.attributes.connector_name.toLowerCase() === 'postgresql'
+                ? 'https://squared.ai/wp-content/uploads/2024/03/apple-touch-icon.png'
+                : destination.attributes.icon
+            }
+>>>>>>> 14215f5c (fix: handle error logs for API Failures (#189))
             options={destinationColumns}
             onChange={handleOnChange}
             isDisabled={!stream || isRequired}

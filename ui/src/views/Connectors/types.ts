@@ -66,11 +66,9 @@ export type CreateConnectorPayload = {
 };
 
 export type CreateConnectorResponse = {
-  data: {
-    attributes: unknown;
-    id: string;
-    type: string;
-  };
+  attributes: unknown;
+  id: string;
+  type: string;
 };
 
 export type ConnectorAttributes = {

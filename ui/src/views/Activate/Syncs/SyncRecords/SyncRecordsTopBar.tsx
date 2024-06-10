@@ -34,7 +34,7 @@ export const SyncRecordsTopBar = ({ syncId, syncRunId }: { syncId: string; syncR
     },
   ];
 
-  const variant = syncRunData?.data.attributes.status as StatusTagVariants;
+  const variant = syncRunData?.data?.attributes?.status as StatusTagVariants;
   const tagText = StatusTagText[variant];
 
   useEffect(() => {
@@ -80,7 +80,7 @@ export const SyncRecordsTopBar = ({ syncId, syncRunId }: { syncId: string; syncR
             Start Time :{' '}
           </Text>
           <Text size='sm' fontWeight='semibold'>
-            {moment(syncRunData?.data.attributes.started_at).format('DD/MM/YYYY HH:mm a')}
+            {moment(syncRunData?.data?.attributes?.started_at).format('DD/MM/YYYY HH:mm a')}
           </Text>
           <Divider
             orientation='vertical'
@@ -93,7 +93,7 @@ export const SyncRecordsTopBar = ({ syncId, syncRunId }: { syncId: string; syncR
             Duration :{' '}
           </Text>
           <Text size='sm' fontWeight='semibold'>
-            {syncRunData?.data.attributes.duration
+            {syncRunData?.data?.attributes?.duration
               ? syncRunData?.data.attributes.duration?.toPrecision(3) + ' seconds '
               : 'No Duration Available'}
           </Text>

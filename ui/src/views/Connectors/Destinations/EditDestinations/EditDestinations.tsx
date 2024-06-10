@@ -59,7 +59,7 @@ const EditDestination = (): JSX.Element => {
 
   useEffect(() => {
     setFormData(connectorInfo?.attributes?.configuration);
-  }, [connectorDefinitionResponse]);
+  }, [connectorDefinitionResponse, connectorInfoResponse]);
 
   const handleOnSaveChanges = async () => {
     if (!connectorInfo?.attributes) return;

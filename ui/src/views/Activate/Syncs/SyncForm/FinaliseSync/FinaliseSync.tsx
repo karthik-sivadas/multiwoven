@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { CustomToastStatus } from '@/components/Toast/index';
 import useCustomToast from '@/hooks/useCustomToast';
 import CronScheduleType from './CronScheduleType';
+import titleCase from '@/utils/TitleCase';
 
 const FinaliseSync = (): JSX.Element => {
   const { state } = useContext(SteppedFormContext);
@@ -61,8 +62,18 @@ const FinaliseSync = (): JSX.Element => {
 
           navigate('/activate/syncs');
           return;
+        } else {
+          response.errors?.forEach((error) => {
+            showToast({
+              duration: 5000,
+              isClosable: true,
+              position: 'bottom-right',
+              colorScheme: 'red',
+              status: CustomToastStatus.Warning,
+              title: titleCase(error.detail),
+            });
+          });
         }
-        throw new Error();
       } catch {
         showToast({
           status: CustomToastStatus.Error,

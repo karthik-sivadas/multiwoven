@@ -23,6 +23,11 @@ import { FormikProps, useFormik } from 'formik';
 import SourceFormFooter from '@/views/Connectors/Sources/SourcesForm/SourceFormFooter';
 import { FieldMap as FieldMapType } from '@/views/Activate/Syncs/types';
 import MapCustomFields from '../SyncForm/ConfigureSyncs/MapCustomFields';
+<<<<<<< HEAD
+=======
+import { useStore } from '@/stores';
+import titleCase from '@/utils/TitleCase';
+>>>>>>> 14215f5c (fix: handle error logs for API Failures (#189))
 
 const EditSync = (): JSX.Element | null => {
   const [selectedStream, setSelectedStream] = useState<Stream | null>(null);
@@ -48,7 +53,7 @@ const EditSync = (): JSX.Element | null => {
     enabled: !!syncId,
   });
 
-  const syncData = syncFetchResponse?.data.attributes;
+  const syncData = syncFetchResponse?.data?.attributes;
 
   const { data: destinationFetchResponse, isLoading: isConnectorInfoLoading } = useQuery({
     queryKey: ['sync', 'destination', syncData?.destination.id],
@@ -100,7 +105,7 @@ const EditSync = (): JSX.Element | null => {
           };
 
           const editSyncResponse = await editSync(payload, syncId as string);
-          if (editSyncResponse.data.attributes) {
+          if (editSyncResponse?.data?.attributes) {
             showToast({
               title: 'Sync updated successfully',
               status: CustomToastStatus.Success,
@@ -115,6 +120,17 @@ const EditSync = (): JSX.Element | null => {
 
             navigate('/activate/syncs');
             return;
+          } else {
+            editSyncResponse.errors?.forEach((error) => {
+              showToast({
+                duration: 5000,
+                isClosable: true,
+                position: 'bottom-right',
+                colorScheme: 'red',
+                status: CustomToastStatus.Warning,
+                title: titleCase(error.detail),
+              });
+            });
           }
         }
       } catch {
@@ -153,11 +169,11 @@ const EditSync = (): JSX.Element | null => {
         cron_expression: syncData?.cron_expression ?? '',
       });
 
-      if (Array.isArray(syncFetchResponse.data.attributes.configuration)) {
+      if (Array.isArray(syncFetchResponse?.data?.attributes?.configuration)) {
         setConfiguration(syncFetchResponse.data.attributes.configuration);
       } else {
         const transformedConfigs = Object.entries(
-          syncFetchResponse.data.attributes.configuration,
+          syncFetchResponse?.data?.attributes?.configuration || {},
         ).map(([model, destination]) => {
           return {
             from: model,

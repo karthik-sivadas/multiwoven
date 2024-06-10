@@ -1,0 +1,66 @@
+name: Cherry-pick CE commits from Enterprise to OSS
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Runs daily at midnight
+  workflow_dispatch:
+
+jobs:
+  cherry-pick-ce-commits:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout OSS repo
+        uses: actions/checkout@v2
+        with:
+          repository: Multiwoven/multiwoven
+          ref: main
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+
+      - name: Add enterprise remote
+        run: |
+          git remote add enterprise https://github.com/Multiwoven/multiwoven-ee.git
+          git fetch enterprise
+
+      - name: Get date five days ago
+        id: date-five-days-ago
+        run: |
+          FIVE_DAYS_AGO=$(date -d "5 days ago" +'%Y-%m-%d')
+          echo "::set-output name=date::$FIVE_DAYS_AGO"
+
+      - name: Fetch CE commits from last five days
+        id: fetch-ce-commits
+        run: |
+          FIVE_DAYS_AGO=${{ steps.date-five-days-ago.outputs.date }}
+          CE_COMMITS=$(git log enterprise/main --since="$FIVE_DAYS_AGO" --grep="(CE)" --pretty=format:"%H" --no-merges)
+          echo "::set-output name=ce_commits::$CE_COMMITS"
+
+      - name: Create new branch for cherry-picked commits
+        run: |
+          BRANCH_NAME="cherry-pick-ce-commits-${{ steps.date-five-days-ago.outputs.date }}"
+          git checkout -b $BRANCH_NAME
+          echo "::set-output name=branch_name::$BRANCH_NAME"
+
+      - name: Cherry-pick CE commits
+        run: |
+          for commit in $(echo ${{ steps.fetch-ce-commits.outputs.ce_commits }}); do
+            git cherry-pick $commit || git cherry-pick --skip
+          done
+
+      - name: Push cherry-picked commits branch
+        run: |
+          git push origin ${{ steps.date-five-days-ago.outputs.branch_name }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Cherry-pick CE commits from Enterprise repo for the last five days"
+          branch: ${{ steps.date-five-days-ago.outputs.branch_name }}
+          base: main
+          title: "[Automated] Cherry-pick CE commits from the last five days"
+          body: "This PR contains CE commits cherry-picked from the Enterprise repository for the last five days starting from ${{ steps.date-five-days-ago.outputs.date }}."

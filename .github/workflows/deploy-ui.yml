@@ -1,0 +1,84 @@
+name: Deploy UI
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["frontend-docker-build (amd64)"]
+    branches: ["main"]
+    types:
+      - completed
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  IMAGE_NAME: multiwoven/multiwoven-ui-ee
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: multiwoven/helm-charts
+
+      - uses: azure/setup-helm@v4.2.0
+        with:
+          version: 'latest'
+        id: install
+
+      - name: Azure Login
+        uses: Azure/login@v2.1.0
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Setup kubelogin
+        uses: azure/use-kubelogin@v1
+        with:
+          kubelogin-version: 'v0.1.3'
+
+      - name: Gets K8s context
+        uses: azure/aks-set-context@v3
+        with:
+            resource-group: ${{ vars.RESOURCE_GROUP }}
+            cluster-name: ${{ vars.CLUSTER_NAME }}
+            admin: 'true'
+            use-kubelogin: 'true'
+
+      - name: Deploy main to staging
+        env:
+          API_HOST: ${{ vars.API_HOST }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          TEMPORAL_HOST: ${{ secrets.TEMPORAL_HOST }}
+          TEMPORAL_NAMESPACE: ${{ secrets.TEMPORAL_NAMESPACE }}
+          TLS_ADMIN_EMAIL: ${{ secrets.TLS_ADMIN_EMAIL }}
+          UI_HOST: ${{ vars.UI_HOST }}
+          VITE_API_HOST: ${{ vars.VITE_API_HOST }}
+          VITE_APPSIGNAL_PUSH_API_KEY: ${{ secrets.VITE_APPSIGNAL_PUSH_API_KEY }}
+          VITE_BRAND_COLOR: ${{ vars.VITE_BRAND_COLOR }}
+          VITE_BRAND_HOVER_COLOR: ${{ vars.VITE_BRAND_HOVER_COLOR }}
+          VITE_BRAND_NAME: ${{ vars.VITE_BRAND_NAME }}
+          VITE_FAV_ICON_URL: ${{ vars.VITE_FAV_ICON_URL }}
+          VITE_LOGO_URL: ${{ vars.VITE_LOGO_URL }}
+          IMAGE_TAG: ${{ github.sha }}
+        working-directory: charts/multiwoven
+        run: |
+          helm upgrade -i --reuse-values multiwoven . \
+            --set multiwovenConfig.privateRepo=true \
+            --set multiwovenConfig.registrySecretName=myregistrykey \
+            --set multiwovenConfig.tlsAdminEmail=$TLS_ADMIN_EMAIL \
+            --set multiwovenConfig.tlsCertIssuer="letsencrypt-prod" \
+            --set multiwovenConfig.uiHost=$UI_HOST \
+            --set multiwovenConfig.viteApiHost=$VITE_API_HOST \
+            --set multiwovenConfig.viteBrandName="$VITE_BRAND_NAME" \
+            --set multiwovenConfig.viteBrandColor="$VITE_BRAND_COLOR" \
+            --set multiwovenConfig.viteBrandHoverColor="$VITE_BRAND_HOVER_COLOR" \
+            --set multiwovenConfig.viteLogoUrl=$VITE_LOGO_URL \
+            --set multiwovenConfig.viteFavIconUrl=$VITE_FAV_ICON_URL \
+            --set multiwovenUI.multiwovenUI.image.repository=$IMAGE_NAME \
+            --set multiwovenUI.multiwovenUI.image.tag=$IMAGE_TAG \
+            --set temporal.enabled=false

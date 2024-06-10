@@ -49,6 +49,28 @@ Rails.application.routes.draw do
       end
     end
   end
+<<<<<<< HEAD
+=======
+  if MultiwovenApp.enterprise?
+    namespace :enterprise, defaults: { format: 'json' } do
+      namespace :api do
+        namespace :v1 do
+          post 'invite_signup', to: 'auth#invite_signup'
+          resources :workspaces do
+            resources :users do
+              patch 'update_role', on: :member
+              patch 'resend_invite', on: :member
+              post 'invite', on: :collection
+            end
+          end
+          resources :roles, only: [:index]
+          resources :resources, only: [:index]
+          resource :profile, only: [:update, :destroy]
+        end
+      end
+    end
+  end
+>>>>>>> 55c0cc59 ([EE] feat: Edit Profile api (#157))
 
   # Uncomment below if you have a root path
   root "rails/health#show"

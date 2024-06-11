@@ -13,7 +13,7 @@ jobs:
       - name: Checkout OSS repo
         uses: actions/checkout@v2
         with:
-          repository: Multiwoven/multiwoven
+          repository: karthik-sivadas/multiwoven
           ref: main
 
       - name: Set up SSH
@@ -58,7 +58,7 @@ jobs:
 
       - name: Push cherry-picked commits branch
         run: |
-          git push origin ${{ steps.date-five-days-ago.outputs.branch_name }}
+          git push --set-upstream origin ${{ steps.date-five-days-ago.outputs.branch_name }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4

@@ -56,16 +56,16 @@ jobs:
       - name: Cherry-pick CE commits
         id: cherry-pick
         run: |
-          set -e
           CHERRY_PICK_CONFLICT=0
           for commit in $(echo ${{ steps.fetch-ce-commits.outputs.ce_commits }}); do
             echo "Cherry-picking commit $commit"
-            git cherry-pick --no-commit $commit || {
+            git cherry-pick --no-commit $commit
+            if [ $? -ne 0 ]; then
               echo "Conflict in commit $commit"
               CHERRY_PICK_CONFLICT=$((CHERRY_PICK_CONFLICT + 1))
               git cherry-pick --abort
               continue
-            }
+            fi
             git commit --no-edit
           done
           echo "::set-output name=conflict_count::$CHERRY_PICK_CONFLICT"

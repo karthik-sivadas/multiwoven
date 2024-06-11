@@ -8,11 +8,22 @@ import {
   FiBookOpen,
   FiGrid,
   FiRefreshCcw,
+<<<<<<< HEAD
   FiUsers,
   FiHome,
 } from 'react-icons/fi';
 import { NavButton } from './navButton';
 import Profile from './Profile';
+=======
+  FiBarChart2,
+  FiTool,
+  FiLayers,
+} from 'react-icons/fi';
+import { NavButton } from './navButton';
+import Profile from './Profile';
+import Workspace from './Workspace/Workspace';
+import { useStore } from '@/stores';
+>>>>>>> 895cc065 (feat(EE): Data Apps and ML Ops changes (#197))
 
 import { useConfigStore } from '@/stores/useConfigStore';
 
@@ -47,6 +58,7 @@ const menus: MenuArray = [
     ],
   },
   {
+<<<<<<< HEAD
     heading: 'DEFINE',
     menu: [{ title: 'Models', link: '/define/models', Icon: FiTable }],
   },
@@ -60,6 +72,20 @@ const menus: MenuArray = [
         Icon: FiUsers,
         disabled: true,
       },
+=======
+    heading: 'AI/ML INTEGRATION',
+    menu: [
+      { title: 'ML Ops', link: '/ml-ops', Icon: FiTool },
+      ...(+useStore.getState().workspaceId === 18
+        ? [
+            {
+              title: 'Data Apps',
+              link: '/data-apps',
+              Icon: FiLayers,
+            },
+          ]
+        : []),
+>>>>>>> 895cc065 (feat(EE): Data Apps and ML Ops changes (#197))
     ],
   },
 ];

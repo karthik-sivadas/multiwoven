@@ -6,6 +6,10 @@ const SignUp = lazy(() => import('@/views/Authentication/SignUp'));
 const AccountVerify = lazy(() => import('@/views/AccountVerify'));
 const Models = lazy(() => import('@/views/Models'));
 const SetupConnectors = lazy(() => import('@/views/Connectors/SetupConnectors'));
+<<<<<<< HEAD
+=======
+const Settings = lazy(() => import('@/views/Settings'));
+>>>>>>> 895cc065 (feat(EE): Data Apps and ML Ops changes (#197))
 
 const SetupActivate = lazy(() => import('@/views/Activate/SetupActivate'));
 
@@ -68,6 +72,18 @@ export const MAIN_PAGE_ROUTES: MAIN_PAGE_ROUTES_ITEM[] = [
       </SuspenseWithLoader>
     ),
   },
+<<<<<<< HEAD
+=======
+  {
+    name: 'Settings',
+    url: '/settings/*',
+    component: (
+      <SuspenseWithLoader redirectRoute='/settings'>
+        <Settings />
+      </SuspenseWithLoader>
+    ),
+  },
+>>>>>>> 895cc065 (feat(EE): Data Apps and ML Ops changes (#197))
 ];
 
 export const AUTH_ROUTES: MAIN_PAGE_ROUTES_ITEM[] = [

@@ -9,6 +9,7 @@ export enum StatusTagVariants {
   in_progress = 'in_progress',
   paused = 'paused',
   failed = 'failed',
+  info = 'info',
 }
 
 type StatusTagProps = {
@@ -66,6 +67,11 @@ const theme: VariantTheme = {
     borderColor: 'gray.300',
     textColor: 'gray.600',
   },
+  info: {
+    bgColor: 'info.100',
+    borderColor: 'info.300',
+    textColor: 'info.600',
+  },
 };
 
 export const StatusTagText = {
@@ -77,6 +83,7 @@ export const StatusTagText = {
   in_progress: 'In Progress',
   paused: 'Paused',
   failed: 'Failed',
+  info: 'Info',
 };
 
 const StatusTag = ({ status, variant = StatusTagVariants.success }: StatusTagProps) => {

@@ -58,8 +58,12 @@ jobs:
         run: |
           set -e
           for commit in $(echo ${{ steps.fetch-ce-commits.outputs.ce_commits }}); do
-            echo "Cherry-picking commit $commit"
-            git cherry-pick $commit || git cherry-pick --skip
+            git cherry-pick --no-commit $commit || git cherry-pick --abort
+            if [ $? -eq 0 ]; then
+              git cherry-pick --continue
+            else
+              git cherry-pick --skip
+            fi
           done
 
       - name: Check current branch

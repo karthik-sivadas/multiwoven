@@ -59,7 +59,7 @@ jobs:
           set -e
           for commit in $(echo ${{ steps.fetch-ce-commits.outputs.ce_commits }}); do
             echo "Cherry-picking commit $commit"
-            git cherry-pick $commit || (echo "Conflict in commit $commit" && exit 1)
+            git cherry-pick $commit || git cherry-pick --skip
           done
 
       - name: Check current branch

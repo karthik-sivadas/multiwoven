@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Loader from './components/Loader';
+import { useStore } from './stores';
 
 interface ProtectedProps {
   children: JSX.Element;
@@ -20,7 +20,10 @@ const Protected: React.FC<ProtectedProps> = ({ children }) => {
   }
 
   if (!isLoggedIn) {
-    return <Navigate to='/sign-in' replace />;
+    window.location.href = '/sign-in';
+    Cookies.remove('authToken');
+    useStore.getState().clearState();
+    return;
   }
 
   return children;

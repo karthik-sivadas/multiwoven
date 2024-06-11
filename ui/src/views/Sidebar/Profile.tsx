@@ -31,6 +31,12 @@ const Profile = () => {
   const handleLogout = async () => {
     const logoutResponse = await logout();
     if (logoutResponse.data) {
+<<<<<<< HEAD
+=======
+      window.location.href = '/sign-in';
+      Cookies.remove('authToken');
+      useStore.getState().clearState();
+>>>>>>> 197a0649 (fix(CE): clear workspace state on logout (#196))
       showToast({
         title: 'Signed out successfully',
         isClosable: true,

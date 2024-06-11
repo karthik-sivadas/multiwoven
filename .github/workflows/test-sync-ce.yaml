@@ -57,14 +57,19 @@ jobs:
         id: cherry-pick
         run: |
           set -e
+          CHERRY_PICK_CONFLICT=0
           for commit in $(echo ${{ steps.fetch-ce-commits.outputs.ce_commits }}); do
-            git cherry-pick --no-commit $commit || git cherry-pick --abort
-            if [ $? -eq 0 ]; then
-              git cherry-pick --continue
-            else
-              git cherry-pick --skip
-            fi
+            echo "Cherry-picking commit $commit"
+            git cherry-pick --no-commit $commit || {
+              echo "Conflict in commit $commit"
+              CHERRY_PICK_CONFLICT=$((CHERRY_PICK_CONFLICT + 1))
+              git cherry-pick --abort
+              continue
+            }
+            git commit --no-edit
           done
+          echo "::set-output name=conflict_count::$CHERRY_PICK_CONFLICT"
+          echo "Number of conflicts: $CHERRY_PICK_CONFLICT"
 
       - name: Check current branch
         run: git branch
@@ -73,12 +78,11 @@ jobs:
         run: git log --oneline --graph --decorate --all
 
       - name: Push cherry-picked commits branch
-        if: success()
         run: |
           git push --set-upstream origin ${{ steps.create-new-branch.outputs.branch_name }}
 
       - name: Create Pull Request
-        if: failure() # Create a PR only if there was a conflict
+        if: steps.cherry-pick.outputs.conflict_count != '0'
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -86,4 +90,4 @@ jobs:
           branch: ${{ steps.create-new-branch.outputs.branch_name }}
           base: main
           title: "[Conflict] Cherry-pick CE commits from the last five days"
-          body: "This PR contains CE commits cherry-picked from the Enterprise repository for the last five days starting from ${{ steps.date-five-days-ago.outputs.date }}. Please resolve the conflicts."
+          body: "This PR contains CE commits cherry-picked from the Enterprise repository for the last five days starting from ${{ steps.date-five-days-ago.outputs.date }}. Number of conflicts: ${{ steps.cherry-pick.outputs.conflict_count }}. Please resolve the conflicts."

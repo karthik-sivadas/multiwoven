@@ -1,15 +1,20 @@
-import { useQuery } from '@tanstack/react-query';
 import DefineSQL from '../ModelsForm/DefineModel/DefineSQL';
 import { useParams } from 'react-router-dom';
 import { Box } from '@chakra-ui/react';
-import { getModelById } from '@/services/models';
+import { ModelAPIResponse, getModelById } from '@/services/models';
 import { PrefillValue } from '../ModelsForm/DefineModel/DefineSQL/types';
 import TopBar from '@/components/TopBar';
-import { useRef } from 'react';
 import ContentContainer from '@/components/ContentContainer';
 import EntityItem from '@/components/EntityItem';
 import Loader from '@/components/Loader';
 import { Step } from '@/components/Breadcrumbs/types';
+<<<<<<< HEAD
+=======
+import { useStore } from '@/stores';
+import useQueryWrapper from '@/hooks/useQueryWrapper';
+import { useRef } from 'react';
+import { GetModelByIdResponse } from '../types';
+>>>>>>> 1dfe46a8 (Fixed model query and page cache update issue (#185))
 
 const EditModel = (): JSX.Element => {
   const params = useParams();
@@ -17,11 +22,22 @@ const EditModel = (): JSX.Element => {
 
   const model_id = params.id || '';
 
+<<<<<<< HEAD
   const { data, isLoading, isError } = useQuery({
     queryKey: ['modelByID'],
     queryFn: () => getModelById(model_id || ''),
     refetchOnMount: true,
     refetchOnWindowFocus: true,
+=======
+  const { data, isLoading, isError } = useQueryWrapper<
+    ModelAPIResponse<GetModelByIdResponse>,
+    Error
+  >(['modelByID', activeWorkspaceId, model_id], () => getModelById(model_id || ''), {
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
+    retryOnMount: true,
+    refetchOnReconnect: true,
+>>>>>>> 1dfe46a8 (Fixed model query and page cache update issue (#185))
   });
 
   const prefillValues: PrefillValue = {
@@ -41,14 +57,6 @@ const EditModel = (): JSX.Element => {
     model_id: model_id,
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (isError) {
-    return <>Error....</>;
-  }
-
   const EDIT_QUERY_FORM_STEPS: Step[] = [
     {
       name: 'Models',
@@ -63,6 +71,14 @@ const EditModel = (): JSX.Element => {
       url: '',
     },
   ];
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <div>Error loading data</div>;
+  }
 
   return (
     <Box width='100%' display='flex' justifyContent='center'>

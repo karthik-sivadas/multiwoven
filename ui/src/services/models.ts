@@ -27,14 +27,11 @@ export type Field = {
 export type ModelPreviewResponse =
   | Field[]
   | {
-      data: {
+      errors?: {
+        detail: string;
         status: number;
-        errors?: {
-          detail: string;
-          status: number;
-          title: string;
-        }[];
-      };
+        title: string;
+      }[];
     };
 
 export type ModelAttributes = {

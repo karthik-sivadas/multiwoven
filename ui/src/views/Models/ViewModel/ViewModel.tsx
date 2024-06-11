@@ -36,9 +36,16 @@ const ViewModel = (): JSX.Element => {
 
   const model_id = params.id || '';
 
+<<<<<<< HEAD
   const { data, isLoading, isError } = useQuery({
     queryKey: ['modelByID'],
     queryFn: () => getModelById(model_id || ''),
+=======
+  const { data, isLoading, isError } = useQueryWrapper<
+    ModelAPIResponse<GetModelByIdResponse>,
+    Error
+  >(['modelByID', activeWorkspaceId, model_id], () => getModelById(model_id || ''), {
+>>>>>>> 1dfe46a8 (Fixed model query and page cache update issue (#185))
     refetchOnMount: true,
     refetchOnWindowFocus: true,
     retryOnMount: true,

@@ -78,8 +78,13 @@ const DefineSQL = ({
     setLoading(true);
     const query = editorRef.current?.getValue() as string;
     const response = await getModelPreviewById(query, connector_id?.toString());
+<<<<<<< HEAD
     if ('data' in response && response.data.errors) {
       response.data.errors.forEach((error: { title: string; detail: string }) => {
+=======
+    if ('errors' in response) {
+      response.errors?.forEach((error) => {
+>>>>>>> 1dfe46a8 (Fixed model query and page cache update issue (#185))
         showToast({
           title: error.detail,
           description: error.detail || 'Please check your query and try again',

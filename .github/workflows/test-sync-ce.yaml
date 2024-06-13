@@ -13,7 +13,7 @@ jobs:
       - name: Checkout OSS repo
         uses: actions/checkout@v2
         with:
-          repository: Multiwoven/multiwoven
+          repository: karthik-sivadas/multiwoven
           ref: main
 
       - name: Set up SSH
@@ -59,14 +59,13 @@ jobs:
           CHERRY_PICK_CONFLICT=0
           for commit in $(echo ${{ steps.fetch-ce-commits.outputs.ce_commits }}); do
             echo "Cherry-picking commit $commit"
-            git cherry-pick --no-commit $commit
-            if [ $? -ne 0 ]; then
+            git cherry-pick --no-commit $commit || {
               echo "Conflict in commit $commit"
               CHERRY_PICK_CONFLICT=$((CHERRY_PICK_CONFLICT + 1))
-              git cherry-pick --abort
-              continue
-            fi
-            git commit --no-edit
+              git add .
+              git commit -m "Resolve conflict in cherry-pick of $commit"
+            }
+            git commit --no-edit || true
           done
           echo "::set-output name=conflict_count::$CHERRY_PICK_CONFLICT"
           echo "Number of conflicts: $CHERRY_PICK_CONFLICT"
@@ -78,7 +77,10 @@ jobs:
         run: git log --oneline --graph --decorate --all
 
       - name: Push cherry-picked commits branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
+          git remote set-url origin https://$GITHUB_ACTOR:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/karthik-sivadas/multiwoven.git
           git push --set-upstream origin ${{ steps.create-new-branch.outputs.branch_name }}
 
       - name: Create Pull Request

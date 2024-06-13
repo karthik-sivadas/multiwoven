@@ -27,6 +27,7 @@ require "zip"
 require "zendesk_api"
 require "faraday"
 require "base64"
+require "iterable-api-client"
 
 # Service
 require_relative "integrations/config"
@@ -68,7 +69,11 @@ require_relative "integrations/destination/salesforce_consumer_goods_cloud/clien
 require_relative "integrations/destination/sftp/client"
 require_relative "integrations/destination/postgresql/client"
 require_relative "integrations/destination/zendesk/client"
+<<<<<<< HEAD
 require_relative "integrations/destination/http/client"
+=======
+require_relative "integrations/destination/iterable/client"
+>>>>>>> 29a322e4 (feat(CE): add Iterable connector)
 
 module Multiwoven
   module Integrations

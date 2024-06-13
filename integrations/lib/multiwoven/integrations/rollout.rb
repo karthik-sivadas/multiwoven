@@ -2,7 +2,11 @@
 
 module Multiwoven
   module Integrations
+<<<<<<< HEAD
     VERSION = "0.1.72"
+=======
+    VERSION = "0.1.76"
+>>>>>>> 29a322e4 (feat(CE): add Iterable connector)
 
     ENABLED_SOURCES = %w[
       Snowflake
@@ -28,7 +32,11 @@ module Multiwoven
       Sftp
       Postgresql
       Zendesk
+<<<<<<< HEAD
       Http
+=======
+      Iterable
+>>>>>>> 29a322e4 (feat(CE): add Iterable connector)
     ].freeze
   end
 end

@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.1].define(version: 2024_05_23_093913) do
+=======
+ActiveRecord::Schema[7.1].define(version: 2024_06_14_140619) do
+>>>>>>> 27822ce5 (fix(CE): json error field added in sync recrord (#208))
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,7 +86,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_23_093913) do
     t.integer "action"
     t.string "primary_key"
     t.integer "status", default: 0
-    t.text "error"
+    t.jsonb "error"
     t.index ["sync_id", "fingerprint"], name: "index_sync_records_on_sync_id_and_fingerprint", unique: true
     t.index ["sync_id", "primary_key"], name: "index_sync_records_on_sync_id_and_primary_key", unique: true
   end

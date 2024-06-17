@@ -1,0 +1,74 @@
+name: Create PR for each CE commit from Enterprise to OSS
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Runs daily at midnight
+  workflow_dispatch:
+
+jobs:
+  create-prs-for-ce-commits:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout OSS repo
+        uses: actions/checkout@v2
+        with:
+          repository: karthik-sivadas/multiwoven
+          ref: main
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+
+      - name: Add enterprise remote
+        run: |
+          git remote add enterprise git@github.com:Multiwoven/multiwoven-ee.git
+          git fetch enterprise
+
+      - name: Get date five days ago
+        id: date-five-days-ago
+        run: |
+          FIVE_DAYS_AGO=$(date -d "5 days ago" +'%Y-%m-%d')
+          echo "::set-output name=date::$FIVE_DAYS_AGO"
+
+      - name: Fetch CE commits from last five days
+        id: fetch-ce-commits
+        run: |
+          FIVE_DAYS_AGO=${{ steps.date-five-days-ago.outputs.date }}
+          CE_COMMITS=$(git log enterprise/main --since="$FIVE_DAYS_AGO" --grep="(CE)" --pretty=format:"%H" --no-merges)
+          echo "::set-output name=ce_commits::$CE_COMMITS"
+          echo "Commits to create PRs for: $CE_COMMITS"
+
+      - name: Authenticate GitHub CLI
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      - name: Create PRs for each CE commit
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          IFS=' ' read -r -a commits <<< "${{ steps.fetch-ce-commits.outputs.ce_commits }}"
+          for commit in "${commits[@]}"; do
+            AUTHOR_NAME=$(git log -1 --pretty=format:'%an' $commit)
+            AUTHOR_EMAIL=$(git log -1 --pretty=format:'%ae' $commit)
+            BRANCH_NAME="cherry-pick-ce-commit-${commit}-$(date +%s)"
+            git checkout -b $BRANCH_NAME
+            git cherry-pick $commit || {
+              echo "Conflict in commit $commit, resolving manually."
+              git add .
+              git commit -am "Resolve conflict in cherry-pick of $commit"
+            }
+            git push --force --set-upstream origin $BRANCH_NAME
+            PR_TITLE="Cherry-pick CE commit ${commit} by ${AUTHOR_NAME}"
+            PR_BODY="This PR cherry-picks the CE commit ${commit} from the Enterprise repository. Commit author: ${AUTHOR_NAME} (${AUTHOR_EMAIL})"
+            AUTHOR_GH_USERNAME=$(gh api graphql -f query='query { search(query: "${AUTHOR_EMAIL}", type: USER, first: 1) { nodes { ... on User { login } } } }' -q '.data.search.nodes[0].login')
+            gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base main --head $BRANCH_NAME --assignee "$AUTHOR_GH_USERNAME"
+            git checkout main
+            git branch -D $BRANCH_NAME
+          done

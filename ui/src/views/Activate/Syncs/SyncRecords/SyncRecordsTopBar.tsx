@@ -8,8 +8,18 @@ import { Box, Divider, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import moment from 'moment';
 import { useEffect } from 'react';
+<<<<<<< HEAD
 
 export const SyncRecordsTopBar = ({ syncId, syncRunId }: { syncId: string; syncRunId: string }) => {
+=======
+import { useStore } from '@/stores';
+import { useSyncStore } from '@/stores/useSyncStore';
+
+export const SyncRecordsTopBar = ({ syncId, syncRunId }: { syncId: string; syncRunId: string }) => {
+  const activeWorkspaceId = useStore((state) => state.workspaceId);
+  const selectedSync = useSyncStore((state) => state.selectedSync);
+
+>>>>>>> 85a78ae4 (feat(CE): Sync Error Log (#219))
   const toast = useCustomToast();
 
   const { data: syncRunData, isError: isSyncRunDataError } = useQuery({
@@ -25,7 +35,7 @@ export const SyncRecordsTopBar = ({ syncId, syncRunId }: { syncId: string; syncR
       url: '/activate/syncs',
     },
     {
-      name: 'Sync ' + syncId,
+      name: selectedSync.syncName || 'Sync ' + syncId,
       url: '/activate/syncs/' + syncId,
     },
     {

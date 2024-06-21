@@ -15,6 +15,11 @@ import SyncRuns from '../SyncRuns';
 import { Step } from '@/components/Breadcrumbs/types';
 import useCustomToast from '@/hooks/useCustomToast';
 import { CustomToastStatus } from '@/components/Toast';
+<<<<<<< HEAD
+=======
+import { useStore } from '@/stores';
+import { useSyncStore } from '@/stores/useSyncStore';
+>>>>>>> 85a78ae4 (feat(CE): Sync Error Log (#219))
 
 enum SyncTabs {
   Tab1 = 'runs',
@@ -22,6 +27,12 @@ enum SyncTabs {
 }
 
 const ViewSync = (): JSX.Element => {
+<<<<<<< HEAD
+=======
+  const activeWorkspaceId = useStore((state) => state.workspaceId);
+  const setSelectedSync = useSyncStore((state) => state.setSelectedSync);
+
+>>>>>>> 85a78ae4 (feat(CE): Sync Error Log (#219))
   const [syncTab, setSyncTab] = useState<SyncTabs>(SyncTabs.Tab1);
   const { syncId } = useParams();
   const toast = useCustomToast();
@@ -46,7 +57,11 @@ const ViewSync = (): JSX.Element => {
       url: '/activate/syncs',
     },
     {
+<<<<<<< HEAD
       name: 'Sync ' + syncId,
+=======
+      name: syncData?.name || 'Sync ' + syncId,
+>>>>>>> 85a78ae4 (feat(CE): Sync Error Log (#219))
       url: '',
     },
   ];
@@ -62,6 +77,16 @@ const ViewSync = (): JSX.Element => {
       });
     }
   }, [isError]);
+
+  useEffect(() => {
+    setSelectedSync({
+      syncName: syncData?.name,
+      sourceName: syncData?.model.connector.name,
+      sourceIcon: syncData?.model.connector.icon,
+      destinationName: syncData?.destination.name,
+      destinationIcon: syncData?.destination.icon,
+    });
+  }, [syncData]);
 
   return (
     <ContentContainer>

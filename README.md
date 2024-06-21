@@ -23,6 +23,40 @@ Multiwoven is an open-source alternative to <b>HighTouch</b>, <b>Census</b>, and
 </p>
 
 <p align="center">
+<table>
+  <tbody>
+    <tr>
+      <td>multiwoven-integrations</td>
+      <td>
+        <a href="https://codeclimate.com/repos/66745e740e284555eea6f8b9/maintainability"><img src="https://api.codeclimate.com/v1/badges/0c6c897d68f2e4bc38e8/maintainability" /></a>
+      </td>
+      <td>
+        <a href="https://codeclimate.com/repos/66745e740e284555eea6f8b9/test_coverage"><img src="https://api.codeclimate.com/v1/badges/0c6c897d68f2e4bc38e8/test_coverage" /></a>
+      </td>
+    </tr>
+    <tr>
+      <td>multiwoven-server</td>
+      <td>
+        <a href="https://codeclimate.com/repos/66745de119d7ad55cfe401b8/maintainability"><img src="https://api.codeclimate.com/v1/badges/9ca32728ce24d99de0cf/maintainability" /></a>
+      </td>
+      <td>
+        <a href="https://codeclimate.com/repos/66745de119d7ad55cfe401b8/test_coverage"><img src="https://api.codeclimate.com/v1/badges/9ca32728ce24d99de0cf/test_coverage" /></a>
+      </td>
+    </tr>
+    <tr>
+      <td>multiwoven-ui</td>
+      <td>
+        <a href="https://codeclimate.com/repos/667457cb9fa35400cda80eaa/maintainability"><img src="https://api.codeclimate.com/v1/badges/f887879dbce1dd9e78e0/maintainability" /></a>
+      </td>
+      <td>
+        <a href="https://codeclimate.com/repos/667457cb9fa35400cda80eaa/test_coverage"><img src="https://api.codeclimate.com/v1/badges/f887879dbce1dd9e78e0/test_coverage" /></a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</p>
+
+<p align="center">
     <br />
     <a href="https://docs.squared.ai/open-source/introduction" rel=""><strong>Explore the docs »</strong></a>
     <br />

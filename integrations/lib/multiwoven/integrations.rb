@@ -54,6 +54,11 @@ require_relative "integrations/source/databricks/client"
 require_relative "integrations/source/salesforce_consumer_goods_cloud/client"
 require_relative "integrations/source/aws_athena/client"
 require_relative "integrations/source/clickhouse/client"
+<<<<<<< HEAD
+=======
+require_relative "integrations/source/amazon_s3/client"
+require_relative "integrations/source/maria_db/client"
+>>>>>>> b9f6d3c3 (feat(CE): Add MariaDB source connector (#215))
 
 # Destination
 require_relative "integrations/destination/klaviyo/client"

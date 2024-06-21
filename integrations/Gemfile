@@ -57,6 +57,17 @@ gem "rubyzip"
 
 gem "faraday"
 
+<<<<<<< HEAD
+=======
+gem "aws-sdk-s3"
+
+gem "duckdb"
+
+gem "iterable-api-client"
+
+gem "mysql2"
+
+>>>>>>> b9f6d3c3 (feat(CE): Add MariaDB source connector (#215))
 group :development, :test do
   gem "simplecov", require: false
   gem "simplecov_json_formatter", require: false

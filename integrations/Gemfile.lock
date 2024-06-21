@@ -7,7 +7,11 @@ GIT
 PATH
   remote: .
   specs:
+<<<<<<< HEAD
     multiwoven-integrations (0.1.75)
+=======
+    multiwoven-integrations (0.3.0)
+>>>>>>> b9f6d3c3 (feat(CE): Add MariaDB source connector (#215))
       activesupport
       async-websocket
       aws-sdk-athena
@@ -197,6 +201,7 @@ GEM
     multi_json (1.15.0)
     multipart-post (2.4.1)
     mutex_m (0.2.0)
+    mysql2 (0.5.6)
     net-sftp (4.0.0)
       net-ssh (>= 5.0.0, < 8.0.0)
     net-ssh (7.2.3)
@@ -304,6 +309,11 @@ GEM
       multipart-post (~> 2.0)
 
 PLATFORMS
+<<<<<<< HEAD
+=======
+  arm64-darwin-22
+  arm64-darwin-23
+>>>>>>> b9f6d3c3 (feat(CE): Add MariaDB source connector (#215))
   x64-mingw-ucrt
   x86_64-darwin-23
 
@@ -322,6 +332,7 @@ DEPENDENCIES
   google-cloud-bigquery
   hubspot-api-client (~> 17.2.0)
   multiwoven-integrations!
+  mysql2
   net-sftp
   pg
   rake (~> 13.0)

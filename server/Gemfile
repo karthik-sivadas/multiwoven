@@ -13,7 +13,11 @@ gem "interactor", "~> 3.0"
 
 gem "ruby-odbc", git: "https://github.com/Multiwoven/ruby-odbc.git"
 
+<<<<<<< HEAD
 gem "multiwoven-integrations", "~> 0.1.75"
+=======
+gem "multiwoven-integrations", "~> 0.3.1"
+>>>>>>> 1cf586c3 (feat(CE):  add table selector as model query type (#234))
 
 gem "temporal-ruby", github: "coinbase/temporal-ruby"
 

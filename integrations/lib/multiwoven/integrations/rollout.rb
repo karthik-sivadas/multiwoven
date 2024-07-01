@@ -2,7 +2,11 @@
 
 module Multiwoven
   module Integrations
+<<<<<<< HEAD
     VERSION = "0.1.75"
+=======
+    VERSION = "0.4.0"
+>>>>>>> ad5401d3 (feat(CE): Add mariaDB destination connector)
 
     ENABLED_SOURCES = %w[
       Snowflake
@@ -28,7 +32,12 @@ module Multiwoven
       Sftp
       Postgresql
       Zendesk
+<<<<<<< HEAD
       Http
+=======
+      Iterable
+      MariaDB
+>>>>>>> ad5401d3 (feat(CE): Add mariaDB destination connector)
     ].freeze
   end
 end

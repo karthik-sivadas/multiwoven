@@ -179,7 +179,15 @@ export type SyncRecordResponse = {
     record: Record<string, string | null>;
     status: SyncRecordStatus;
     action: 'destination_insert' | 'destination_update' | 'destination_delete';
+<<<<<<< HEAD
     error: null;
+=======
+    logs: {
+      request: string;
+      response: string;
+      level: string;
+    };
+>>>>>>> d9efd7fd (feat(CE): display logs for all types of sync records (#255))
     created_at: string;
     updated_at: string;
   };

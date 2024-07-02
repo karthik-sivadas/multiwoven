@@ -6,10 +6,8 @@ import { Box, Image, Tabs, Text } from '@chakra-ui/react';
 import { getSyncRecords } from '@/services/syncs';
 
 import Loader from '@/components/Loader';
-import Table from '@/components/Table';
 import ContentContainer from '@/components/ContentContainer';
 
-import { TableItem } from '@/views/Activate/Syncs/SyncRecords/SyncRecordsTableItem';
 import Pagination from '@/components/Pagination';
 import SyncRunEmptyImage from '@/assets/images/empty-state-illustration.svg';
 
@@ -18,6 +16,9 @@ import useCustomToast from '@/hooks/useCustomToast';
 import { CustomToastStatus } from '@/components/Toast';
 import { SyncRecordStatus } from '../types';
 import { FilterTabs } from './FilterTabs';
+
+import DataTable from '@/components/DataTable';
+import { SyncRecordsColumns, useDynamicSyncColumns } from './SyncRecordsColumns';
 
 const SyncRecords = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,19 +41,23 @@ const SyncRecords = (): JSX.Element => {
     refetchOnWindowFocus: false,
   });
 
+<<<<<<< HEAD
   const filteredRecords = useMemo(
     () => syncRunRecords?.data.filter((record) => record.attributes.status === currentFilter),
+=======
+  const data = useMemo(
+    () => syncRunRecords?.data?.filter?.((record) => record.attributes.status === currentFilter),
+>>>>>>> 4e85395c (fix(CE): sync records table  (#257))
     [syncRunRecords, currentFilter],
   );
 
-  const syncRunRecordColumns = useMemo(
-    () =>
-      filteredRecords && filteredRecords.length > 0
-        ? Object.keys(filteredRecords[0].attributes.record)
-        : [],
-    [filteredRecords],
+  const dynamicSyncColumns = useDynamicSyncColumns(data ? data : []);
+  const allColumns = useMemo(
+    () => [...SyncRecordsColumns, ...dynamicSyncColumns],
+    [SyncRecordsColumns, dynamicSyncColumns],
   );
 
+<<<<<<< HEAD
   const SYNC_RUNS_RECORDS_COLUMNS = useMemo(
     () => [
       {
@@ -98,6 +103,8 @@ const SyncRecords = (): JSX.Element => {
     }
   };
 
+=======
+>>>>>>> 4e85395c (fix(CE): sync records table  (#257))
   useEffect(() => {
     setSearchParams({ page: currentPage.toString() });
   }, [currentPage, setSearchParams]);
@@ -114,6 +121,18 @@ const SyncRecords = (): JSX.Element => {
       });
     }
   }, [isSyncRecordsError, toast]);
+
+  const handleNextPage = () => {
+    if (syncRunRecords?.links?.next) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (syncRunRecords?.links?.prev) {
+      setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    }
+  };
 
   return (
     <ContentContainer>
@@ -139,7 +158,7 @@ const SyncRecords = (): JSX.Element => {
         <Loader />
       ) : (
         <Box width='100%' pt={'20px'}>
-          {filteredRecords?.length === 0 ? (
+          {data?.length === 0 || !data ? (
             <Box
               display='flex'
               w='fit-content'
@@ -155,7 +174,9 @@ const SyncRecords = (): JSX.Element => {
             </Box>
           ) : (
             <Box>
-              <Table data={tableData} />
+              <Box border='1px' borderColor='gray.400' borderRadius='lg' overflowX='scroll'>
+                <DataTable data={data} columns={allColumns} />
+              </Box>
               <Box display='flex' flexDirection='row-reverse' pt='10px'>
                 <Pagination
                   currentPage={currentPage}

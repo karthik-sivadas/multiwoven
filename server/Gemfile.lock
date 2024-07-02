@@ -1554,6 +1554,9 @@ GEM
     aws-sdk-storagegateway (1.80.0)
       aws-sdk-core (~> 3, >= 3.188.0)
       aws-sigv4 (~> 1.1)
+    aws-sdk-sts (1.11.0)
+      aws-sdk-core (~> 3, >= 3.110.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-supplychain (1.0.0)
       aws-sdk-core (~> 3, >= 3.188.0)
       aws-sigv4 (~> 1.1)
@@ -1774,8 +1777,13 @@ GEM
     gli (2.21.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
+<<<<<<< HEAD
     google-apis-bigquery_v2 (0.69.0)
       google-apis-core (>= 0.14.0, < 2.a)
+=======
+    google-apis-bigquery_v2 (0.72.0)
+      google-apis-core (>= 0.15.0, < 2.a)
+>>>>>>> 45cef07c (chore(CE): Gem update for s3 connector arn support (#254))
     google-apis-core (0.15.0)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 1.9)
@@ -1786,10 +1794,10 @@ GEM
       rexml
     google-apis-sheets_v4 (0.32.0)
       google-apis-core (>= 0.15.0, < 2.a)
-    google-cloud-bigquery (1.49.1)
+    google-cloud-bigquery (1.50.0)
       bigdecimal (~> 3.0)
       concurrent-ruby (~> 1.0)
-      google-apis-bigquery_v2 (~> 0.62)
+      google-apis-bigquery_v2 (~> 0.71)
       google-apis-core (~> 0.13)
       google-cloud-core (~> 1.6)
       googleauth (~> 1.9)
@@ -1887,10 +1895,19 @@ GEM
     msgpack (1.7.2)
     multi_json (1.15.0)
     multipart-post (2.4.1)
+<<<<<<< HEAD
     multiwoven-integrations (0.1.75)
       activesupport
       async-websocket
       aws-sdk-athena
+=======
+    multiwoven-integrations (0.3.4)
+      activesupport
+      async-websocket
+      aws-sdk-athena
+      aws-sdk-s3
+      aws-sdk-sts
+>>>>>>> 45cef07c (chore(CE): Gem update for s3 connector arn support (#254))
       csv
       dry-schema
       dry-struct
@@ -2105,6 +2122,10 @@ GEM
       faraday-multipart
       gli
       hashie
+<<<<<<< HEAD
+=======
+    sorbet-runtime (0.5.11463)
+>>>>>>> 45cef07c (chore(CE): Gem update for s3 connector arn support (#254))
     stringio (3.1.0)
     stripe (11.6.0)
     strong_migrations (1.8.0)
@@ -2138,7 +2159,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     zeitwerk (2.6.12)
-    zendesk_api (3.0.5)
+    zendesk_api (3.1.0)
       faraday (> 2.0.0)
       faraday-multipart
       hashie (>= 3.5.2, < 6.0.0)
@@ -2178,7 +2199,12 @@ DEPENDENCIES
   jwt
   kaminari
   liquid
+<<<<<<< HEAD
   multiwoven-integrations (~> 0.1.75)
+=======
+  multiwoven-integrations (~> 0.3.4)
+  mysql2
+>>>>>>> 45cef07c (chore(CE): Gem update for s3 connector arn support (#254))
   newrelic_rpm
   parallel
   pg (~> 1.1)

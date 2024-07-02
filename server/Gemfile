@@ -13,7 +13,11 @@ gem "interactor", "~> 3.0"
 
 gem "ruby-odbc", git: "https://github.com/Multiwoven/ruby-odbc.git"
 
+<<<<<<< HEAD
 gem "multiwoven-integrations", "~> 0.1.75"
+=======
+gem "multiwoven-integrations", "~> 0.3.5"
+>>>>>>> c850072f (feat(CE): Server changes for save logs to sync record table)
 
 gem "temporal-ruby", github: "coinbase/temporal-ruby"
 

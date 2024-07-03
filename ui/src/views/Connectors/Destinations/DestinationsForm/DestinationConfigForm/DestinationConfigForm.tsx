@@ -9,6 +9,11 @@ import ContentContainer from '@/components/ContentContainer';
 import SourceFormFooter from '@/views/Connectors/Sources/SourcesForm/SourceFormFooter';
 import JSONSchemaForm from '@/components/JSONSchemaForm';
 import { generateUiSchema } from '@/utils/generateUiSchema';
+<<<<<<< HEAD
+=======
+import { useStore } from '@/stores';
+import { processFormData } from '@/views/Connectors/helpers';
+>>>>>>> 8d07dff0 (fix(CE): added processFormData to process form data before checking connection (#262))
 
 const DestinationConfigForm = (): JSX.Element | null => {
   const { state, stepInfo, handleMoveForward } = useContext(SteppedFormContext);
@@ -32,7 +37,8 @@ const DestinationConfigForm = (): JSX.Element | null => {
   if (!connectorSchema) return null;
 
   const handleFormSubmit = async (formData: FormData) => {
-    handleMoveForward(stepInfo?.formKey as string, formData);
+    const processedFormData = processFormData(formData);
+    handleMoveForward(stepInfo?.formKey as string, processedFormData);
   };
 
   const generatedSchema = generateUiSchema(connectorSchema);

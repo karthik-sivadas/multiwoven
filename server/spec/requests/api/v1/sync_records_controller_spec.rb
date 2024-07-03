@@ -20,7 +20,11 @@ RSpec.describe "Api::V1::SyncRunsController", type: :request do
   let!(:sync_records) do
     [
       create(:sync_record, sync:, sync_run:, status: "success", primary_key: "key1"),
+<<<<<<< HEAD
       create(:sync_record, sync:, sync_run:, status: "failed", primary_key: "key2")
+=======
+      create(:sync_record, sync:, sync_run:, status: "failed", primary_key: "key2", logs: { message: "test" })
+>>>>>>> c850072f (feat(CE): Server changes for save logs to sync record table)
     ]
   end
   let(:viewer_role) { create(:role, role_name: "Viewer") }
@@ -51,6 +55,13 @@ RSpec.describe "Api::V1::SyncRunsController", type: :request do
           expect(row.dig(:attributes, :record)).to eq(sync_record.record)
           expect(row.dig(:attributes, :action)).to eq(sync_record.action)
           expect(row.dig(:attributes, :status)).to eq(sync_record.status)
+<<<<<<< HEAD
+=======
+          if sync_record.status == "failed"
+            expect(row.dig(:attributes, :logs)).to eq(sync_record.logs)
+            expect { JSON.parse(row.dig(:attributes, :logs).to_json) }.not_to raise_error
+          end
+>>>>>>> c850072f (feat(CE): Server changes for save logs to sync record table)
           expect(response_hash.dig(:links, :first)).to include("http://www.example.com/api/v1/syncs/#{sync.id}/sync_runs/#{sync_run.id}/sync_records?page=1")
         end
       end
@@ -72,6 +83,13 @@ RSpec.describe "Api::V1::SyncRunsController", type: :request do
           expect(row.dig(:attributes, :record)).to eq(sync_record.record)
           expect(row.dig(:attributes, :action)).to eq(sync_record.action)
           expect(row.dig(:attributes, :status)).to eq(sync_record.status)
+<<<<<<< HEAD
+=======
+          if sync_record.status == "failed"
+            expect(row.dig(:attributes, :logs)).to eq(sync_record.logs)
+            expect { JSON.parse(row.dig(:attributes, :logs).to_json) }.not_to raise_error
+          end
+>>>>>>> c850072f (feat(CE): Server changes for save logs to sync record table)
           expect(response_hash.dig(:links, :first)).to include("http://www.example.com/api/v1/syncs/#{sync.id}/sync_runs/#{sync_run.id}/sync_records?page=1")
         end
       end
@@ -93,6 +111,13 @@ RSpec.describe "Api::V1::SyncRunsController", type: :request do
           expect(row.dig(:attributes, :record)).to eq(sync_record.record)
           expect(row.dig(:attributes, :action)).to eq(sync_record.action)
           expect(row.dig(:attributes, :status)).to eq(sync_record.status)
+<<<<<<< HEAD
+=======
+          if sync_record.status == "failed"
+            expect(row.dig(:attributes, :logs)).to eq(sync_record.logs)
+            expect { JSON.parse(row.dig(:attributes, :logs).to_json) }.not_to raise_error
+          end
+>>>>>>> c850072f (feat(CE): Server changes for save logs to sync record table)
           expect(response_hash.dig(:links, :first)).to include("http://www.example.com/api/v1/syncs/#{sync.id}/sync_runs/#{sync_run.id}/sync_records?page=1")
         end
       end

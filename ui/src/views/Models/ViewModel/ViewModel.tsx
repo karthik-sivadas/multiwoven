@@ -15,6 +15,8 @@ import {
   Spacer,
   Text,
   VStack,
+  Tag,
+  Icon,
   Divider,
 } from '@chakra-ui/react';
 import { Editor } from '@monaco-editor/react';
@@ -28,6 +30,16 @@ import moment from 'moment';
 import ModelActions from './ModelActions';
 import { CustomToastStatus } from '@/components/Toast/index';
 import useCustomToast from '@/hooks/useCustomToast';
+<<<<<<< HEAD
+=======
+import useQueryWrapper from '@/hooks/useQueryWrapper';
+import { GetModelByIdResponse } from '@/views/Models/types';
+import { useStore } from '@/stores';
+import RoleAccess from '@/enterprise/components/RoleAccess';
+import { FiLayout } from 'react-icons/fi';
+import { UserActions } from '@/enterprise/types';
+import { QueryType } from '@/views/Models/types';
+>>>>>>> a162c864 (feat(CE): enable table selector and layout (#247))
 
 const ViewModel = (): JSX.Element => {
   const params = useParams();
@@ -72,7 +84,7 @@ const ViewModel = (): JSX.Element => {
     model_description: data?.data?.attributes.description || '',
     primary_key: data?.data?.attributes.primary_key || '',
     query: data?.data?.attributes.query || '',
-    query_type: data?.data?.attributes.query_type || '',
+    query_type: data?.data?.attributes.query_type || QueryType.RawSql,
     model_id: model_id,
   };
 
@@ -109,6 +121,9 @@ const ViewModel = (): JSX.Element => {
       url: '',
     },
   ];
+
+  // extracting table name from the query for table_selector method
+  const tableName = prefillValues?.query?.split('FROM')?.[1]?.trim();
 
   return (
     <Box width='100%' display='flex' justifyContent='center'>
@@ -148,7 +163,7 @@ const ViewModel = (): JSX.Element => {
               roundedTop='xl'
               alignItems='center'
               bgColor='gray.300'
-              p={2}
+              padding='12px 20px'
               border='1px'
               borderColor='gray.400'
             >
@@ -157,6 +172,7 @@ const ViewModel = (): JSX.Element => {
                 icon={data.data?.attributes.connector.icon || ''}
               />
               <Spacer />
+<<<<<<< HEAD
               <Button
                 variant='shell'
                 onClick={() => navigate('edit')}
@@ -168,40 +184,81 @@ const ViewModel = (): JSX.Element => {
               >
                 Edit
               </Button>
+=======
+              {prefillValues?.query_type !== QueryType.TableSelector && (
+                <RoleAccess location='model' type='item' action={UserActions.Update}>
+                  <Button
+                    variant='shell'
+                    onClick={() => navigate('edit')}
+                    minWidth='0'
+                    width='auto'
+                    height='32px'
+                    fontSize='12px'
+                    paddingX={3}
+                  >
+                    Edit
+                  </Button>
+                </RoleAccess>
+              )}
+>>>>>>> a162c864 (feat(CE): enable table selector and layout (#247))
             </Flex>
             <Box borderX='1px' borderBottom='1px' roundedBottom='lg' py={2} borderColor='gray.400'>
-              <Editor
-                width='100%'
-                height='280px'
-                language='mysql'
-                defaultLanguage='mysql'
-                defaultValue='Enter your query...'
-                value={prefillValues.query}
-                saveViewState={true}
-                theme='light'
-                options={{
-                  minimap: {
-                    enabled: false,
-                  },
-                  formatOnType: true,
-                  formatOnPaste: true,
-                  autoIndent: 'full',
-                  wordBasedSuggestions: 'currentDocument',
-                  scrollBeyondLastLine: false,
-                  quickSuggestions: true,
-                  tabCompletion: 'on',
-                  contextmenu: true,
-                  readOnly: true,
-                }}
-              />
+              {prefillValues?.query_type === QueryType.TableSelector ? (
+                <Box padding='12px 20px' display='flex' gap='8px'>
+                  <Text color='black.200' size='sm' fontWeight='semibold'>
+                    Fetching all rows from the table
+                  </Text>
+                  <Tag
+                    colorScheme='teal'
+                    size='xs'
+                    bgColor='gray.200'
+                    padding='2px 8px'
+                    fontWeight={600}
+                    borderColor='gray.500'
+                    borderWidth='1px'
+                    borderStyle='solid'
+                    height='22px'
+                    borderRadius='4px'
+                  >
+                    <Icon as={FiLayout} color='black.200' height='12px' width='12px' />
+                    <Text size='xs' fontWeight='semibold' color='black.300' marginLeft='4px'>
+                      {tableName}
+                    </Text>
+                  </Tag>
+                </Box>
+              ) : (
+                <Editor
+                  width='100%'
+                  height='280px'
+                  language='mysql'
+                  defaultLanguage='mysql'
+                  defaultValue='Enter your query...'
+                  value={prefillValues.query}
+                  saveViewState={true}
+                  theme='light'
+                  options={{
+                    minimap: {
+                      enabled: false,
+                    },
+                    formatOnType: true,
+                    formatOnPaste: true,
+                    autoIndent: 'full',
+                    wordBasedSuggestions: 'currentDocument',
+                    scrollBeyondLastLine: false,
+                    quickSuggestions: true,
+                    tabCompletion: 'on',
+                    contextmenu: true,
+                    readOnly: true,
+                  }}
+                />
+              )}
             </Box>
           </Box>
           <Box
             w='full'
             mx='auto'
             bgColor='gray.100'
-            px={8}
-            py={6}
+            padding='24px'
             rounded='xl'
             border='1px'
             borderColor='gray.400'

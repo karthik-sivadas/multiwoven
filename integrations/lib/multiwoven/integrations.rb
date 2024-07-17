@@ -68,7 +68,13 @@ require_relative "integrations/destination/salesforce_consumer_goods_cloud/clien
 require_relative "integrations/destination/sftp/client"
 require_relative "integrations/destination/postgresql/client"
 require_relative "integrations/destination/zendesk/client"
+<<<<<<< HEAD
 require_relative "integrations/destination/http/client"
+=======
+require_relative "integrations/destination/iterable/client"
+require_relative "integrations/destination/maria_db/client"
+require_relative "integrations/destination/databricks_lakehouse/client"
+>>>>>>> d0c9f238 (feat(CE): Add databricks lakehouse destination)
 
 module Multiwoven
   module Integrations

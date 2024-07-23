@@ -47,6 +47,31 @@ Rails.application.routes.draw do
           get :workspace_activity
         end
       end
+<<<<<<< HEAD
+=======
+
+      post "schedule_syncs", to: "schedule_syncs#create"
+      delete "schedule_syncs/:sync_id", to: "schedule_syncs#destroy"
+    end
+  end
+  if MultiwovenApp.enterprise?
+    namespace :enterprise, defaults: { format: "json" } do
+      namespace :api do
+        namespace :v1 do
+          post "invite_signup", to: "auth#invite_signup"
+          resources :workspaces do
+            resources :users do
+              patch "update_role", on: :member
+              patch "resend_invite", on: :member
+              post "invite", on: :collection
+            end
+          end
+          resources :roles, only: [:index]
+          resources :resources, only: [:index]
+          resource :profile, only: %i[update destroy]
+        end
+      end
+>>>>>>> 424d2d94 (fix(CE): Update manual sync delete API call (#311))
     end
   end
 

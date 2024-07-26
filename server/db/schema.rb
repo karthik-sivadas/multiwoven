@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.1].define(version: 2024_05_23_093913) do
+=======
+ActiveRecord::Schema[7.1].define(version: 2024_07_25_060832) do
+>>>>>>> edb0abcd (chore(CE): Added sync_run_type column in sync run (#322))
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -106,6 +110,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_23_093913) do
     t.integer "total_query_rows"
     t.datetime "discarded_at"
     t.integer "skipped_rows", default: 0
+    t.integer "sync_run_type", default: 0
     t.index ["discarded_at"], name: "index_sync_runs_on_discarded_at"
   end
 

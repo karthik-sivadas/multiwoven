@@ -8,8 +8,20 @@ import { Box, Divider, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import moment from 'moment';
 import { useEffect } from 'react';
+<<<<<<< HEAD
 
 export const SyncRecordsTopBar = ({ syncId, syncRunId }: { syncId: string; syncRunId: string }) => {
+=======
+import { useStore } from '@/stores';
+import { useSyncStore } from '@/stores/useSyncStore';
+import { useAPIErrorsToast } from '@/hooks/useErrorToast';
+
+export const SyncRecordsTopBar = ({ syncId, syncRunId }: { syncId: string; syncRunId: string }) => {
+  const activeWorkspaceId = useStore((state) => state.workspaceId);
+  const selectedSync = useSyncStore((state) => state.selectedSync);
+  const apiErrorToast = useAPIErrorsToast();
+
+>>>>>>> 8b6bcbbd (feat(CE): Add sync run type column)
   const toast = useCustomToast();
 
   const { data: syncRunData, isError: isSyncRunDataError } = useQuery({
@@ -18,6 +30,10 @@ export const SyncRecordsTopBar = ({ syncId, syncRunId }: { syncId: string; syncR
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+  if (syncRunData?.errors && syncRunData?.errors.length > 0) {
+    apiErrorToast(syncRunData.errors);
+  }
 
   const VIEW_SYNC_RUN_RECORDS_STEPS: Step[] = [
     {

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       # Authentication Routes
+<<<<<<< HEAD
       post 'signup', to: 'auth#signup'
       post 'verify_code', to: 'auth#verify_code'
       post 'login', to: 'auth#login'
@@ -14,6 +15,15 @@ Rails.application.routes.draw do
       post 'forgot_password', to: 'auth#forgot_password'
       post 'reset_password', to: 'auth#reset_password'
       post 'resend_verification', to: 'auth#resend_verification'
+=======
+      post "signup", to: "auth#signup"
+      get "verify_user", to: "auth#verify_user"
+      post "login", to: "auth#login"
+      delete "logout", to: "auth#logout"
+      post "forgot_password", to: "auth#forgot_password"
+      post "reset_password", to: "auth#reset_password"
+      post "resend_verification", to: "auth#resend_verification"
+>>>>>>> 996da424 (chore(CE): verify user signup using devise confirmable)
 
       # Workspace Routes
       resources :workspaces

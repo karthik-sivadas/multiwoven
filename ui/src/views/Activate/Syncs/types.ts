@@ -150,6 +150,7 @@ export type SyncRunsResponse = {
     successful_rows: number;
     failed_rows: number;
     error: ErrorResponse | null;
+    sync_run_type: string;
   };
   id: string;
   type: 'sync_runs';
@@ -158,6 +159,7 @@ export type SyncRunsResponse = {
 export type SyncRunsColumnFields =
   | 'status'
   | 'start_time'
+  | 'sync_run_type'
   | 'duration'
   | 'rows_queried'
   | 'skipped_rows'

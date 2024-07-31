@@ -43,6 +43,7 @@ module ReverseEtl
           update_or_create_sync_record(sync_record, record, sync_run, fingerprint) ? 0 : 1
         end.sum
       end
+<<<<<<< HEAD
 
       def process_record(record, sync_run, model)
         primary_key = record.data.with_indifferent_access[model.primary_key]
@@ -103,6 +104,8 @@ module ReverseEtl
         )
         sync_record.save!
       end
+=======
+>>>>>>> 652939a8 (feat(CE): test sync extractor changes (#332))
     end
   end
 end

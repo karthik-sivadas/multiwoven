@@ -2,7 +2,11 @@
 
 module Multiwoven
   module Integrations
+<<<<<<< HEAD
     VERSION = "0.1.75"
+=======
+    VERSION = "0.7.1"
+>>>>>>> c05f9f32 (chore(CE): change name to databricks datawarehouse (#340))
 
     ENABLED_SOURCES = %w[
       Snowflake

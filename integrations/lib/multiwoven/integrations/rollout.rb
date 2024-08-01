@@ -2,7 +2,11 @@
 
 module Multiwoven
   module Integrations
+<<<<<<< HEAD
     VERSION = "0.1.75"
+=======
+    VERSION = "0.7.0"
+>>>>>>> 4872fcdf (feat(CE): add oracle db source connector (#333))
 
     ENABLED_SOURCES = %w[
       Snowflake
@@ -13,6 +17,12 @@ module Multiwoven
       SalesforceConsumerGoodsCloud
       AwsAthena
       Clickhouse
+<<<<<<< HEAD
+=======
+      AmazonS3
+      MariaDB
+      Oracle
+>>>>>>> 4872fcdf (feat(CE): add oracle db source connector (#333))
     ].freeze
 
     ENABLED_DESTINATIONS = %w[

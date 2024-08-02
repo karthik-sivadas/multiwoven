@@ -54,6 +54,12 @@ require_relative "integrations/source/databricks/client"
 require_relative "integrations/source/salesforce_consumer_goods_cloud/client"
 require_relative "integrations/source/aws_athena/client"
 require_relative "integrations/source/clickhouse/client"
+<<<<<<< HEAD
+=======
+require_relative "integrations/source/amazon_s3/client"
+require_relative "integrations/source/maria_db/client"
+require_relative "integrations/source/oracle_db/client"
+>>>>>>> 4872fcdf (feat(CE): add oracle db source connector (#333))
 
 # Destination
 require_relative "integrations/destination/klaviyo/client"

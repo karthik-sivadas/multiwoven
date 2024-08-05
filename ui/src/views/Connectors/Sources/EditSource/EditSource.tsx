@@ -8,7 +8,6 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Box, Button, Divider, Text } from '@chakra-ui/react';
-import SourceFormFooter from '../SourcesForm/SourceFormFooter';
 import TopBar from '@/components/TopBar';
 import ContentContainer from '@/components/ContentContainer';
 import { useEffect, useState } from 'react';
@@ -24,6 +23,13 @@ import { CustomToastStatus } from '@/components/Toast/index';
 import useCustomToast from '@/hooks/useCustomToast';
 import JSONSchemaForm from '../../../../components/JSONSchemaForm';
 import { generateUiSchema } from '@/utils/generateUiSchema';
+<<<<<<< HEAD
+=======
+import { useStore } from '@/stores';
+import RoleAccess from '@/enterprise/components/RoleAccess';
+import { UserActions } from '@/enterprise/types';
+import FormFooter from '@/components/FormFooter';
+>>>>>>> 4dc44c9c (refactor(CE): Connector creation process)
 
 const EditSource = (): JSX.Element => {
   const { sourceId } = useParams();
@@ -207,7 +213,7 @@ const EditSource = (): JSX.Element => {
             onSubmit={(formData: FormData) => handleOnTestClick(formData)}
             onChange={(formData: FormData) => setFormData(formData)}
           >
-            <SourceFormFooter
+            <FormFooter
               ctaName='Save Changes'
               ctaType='button'
               isCtaDisabled={!testedFormData}

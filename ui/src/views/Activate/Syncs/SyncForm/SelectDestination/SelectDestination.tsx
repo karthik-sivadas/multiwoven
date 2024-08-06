@@ -9,7 +9,13 @@ import { Box } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useContext, Dispatch, SetStateAction } from 'react';
 import { Stream, FieldMap as FieldMapType } from '@/views/Activate/Syncs/types';
+<<<<<<< HEAD
 import SourceFormFooter from '@/views/Connectors/Sources/SourcesForm/SourceFormFooter';
+=======
+import FormFooter from '@/components/FormFooter';
+import useQueryWrapper from '@/hooks/useQueryWrapper';
+import { ConnectorListResponse } from '@/views/Connectors/types';
+>>>>>>> 4dc44c9c (refactor(CE): Connector creation process)
 
 const SelectDestination = ({
   setSelectedStream,
@@ -51,7 +57,7 @@ const SelectDestination = ({
               destinationData={data}
               isLoading={isLoading}
             />
-            <SourceFormFooter ctaName='Continue' ctaType='submit' isBackRequired />
+            <FormFooter ctaName='Continue' ctaType='submit' isBackRequired />
           </>
         )}
       </ContentContainer>

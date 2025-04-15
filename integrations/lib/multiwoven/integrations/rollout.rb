@@ -2,7 +2,11 @@
 
 module Multiwoven
   module Integrations
+<<<<<<< HEAD
     VERSION = "0.1.75"
+=======
+    VERSION = "0.3.2"
+>>>>>>> 8cc7145e (feat(CE): Added s3 connector ARN support for auth)
 
     ENABLED_SOURCES = %w[
       Snowflake

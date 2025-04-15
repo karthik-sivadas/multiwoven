@@ -27,6 +27,13 @@ require "zip"
 require "zendesk_api"
 require "faraday"
 require "base64"
+<<<<<<< HEAD
+=======
+require "aws-sdk-s3"
+require "duckdb"
+require "iterable-api-client"
+require "aws-sdk-sts"
+>>>>>>> 8cc7145e (feat(CE): Added s3 connector ARN support for auth)
 
 # Service
 require_relative "integrations/config"

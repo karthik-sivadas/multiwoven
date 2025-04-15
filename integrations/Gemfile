@@ -57,6 +57,19 @@ gem "rubyzip"
 
 gem "faraday"
 
+<<<<<<< HEAD
+=======
+gem "aws-sdk-s3"
+
+gem "duckdb"
+
+gem "iterable-api-client"
+
+gem "mysql2"
+
+gem "aws-sdk-sts"
+
+>>>>>>> 8cc7145e (feat(CE): Added s3 connector ARN support for auth)
 group :development, :test do
   gem "simplecov", require: false
   gem "simplecov_json_formatter", require: false

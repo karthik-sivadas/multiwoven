@@ -7,10 +7,19 @@ GIT
 PATH
   remote: .
   specs:
+<<<<<<< HEAD
     multiwoven-integrations (0.1.75)
       activesupport
       async-websocket
       aws-sdk-athena
+=======
+    multiwoven-integrations (0.3.2)
+      activesupport
+      async-websocket
+      aws-sdk-athena
+      aws-sdk-s3
+      aws-sdk-sts
+>>>>>>> 8cc7145e (feat(CE): Added s3 connector ARN support for auth)
       csv
       dry-schema
       dry-struct
@@ -67,6 +76,19 @@ GEM
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.8)
       jmespath (~> 1, >= 1.6.1)
+<<<<<<< HEAD
+=======
+    aws-sdk-kms (1.82.0)
+      aws-sdk-core (~> 3, >= 3.193.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.151.0)
+      aws-sdk-core (~> 3, >= 3.194.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.8)
+    aws-sdk-sts (1.11.0)
+      aws-sdk-core (~> 3, >= 3.110.0)
+      aws-sigv4 (~> 1.1)
+>>>>>>> 8cc7145e (feat(CE): Added s3 connector ARN support for auth)
     aws-sigv4 (1.8.0)
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
@@ -311,6 +333,11 @@ DEPENDENCIES
   activesupport
   async-websocket (~> 0.8.0)
   aws-sdk-athena
+<<<<<<< HEAD
+=======
+  aws-sdk-s3
+  aws-sdk-sts
+>>>>>>> 8cc7145e (feat(CE): Added s3 connector ARN support for auth)
   byebug
   csv
   dry-schema

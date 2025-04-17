@@ -2,7 +2,11 @@
 
 module Multiwoven
   module Integrations
+<<<<<<< HEAD
     VERSION = "0.1.75"
+=======
+    VERSION = "0.3.1"
+>>>>>>> 5c69f354 (feat(CE): add table selector as model query type (#243))
 
     ENABLED_SOURCES = %w[
       Snowflake

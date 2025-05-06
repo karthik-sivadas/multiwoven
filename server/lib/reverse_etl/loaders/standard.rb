@@ -56,9 +56,13 @@ module ReverseEtl
             Rails.logger(e)
           end
 
+<<<<<<< HEAD
           update_sync_records_status(sync_run, successfull_sync_records, failed_sync_records)
 
           heartbeat(activity)
+=======
+          heartbeat(activity, sync_run)
+>>>>>>> fc39f63f (fix(CE): heartbeat timeout actions in extractor (#316))
         end
       end
 
@@ -94,6 +98,10 @@ module ReverseEtl
           }.to_s)
         end
         update_sync_records_status(sync_run, successfull_sync_records, failed_sync_records)
+<<<<<<< HEAD
+=======
+        heartbeat(activity, sync_run)
+>>>>>>> fc39f63f (fix(CE): heartbeat timeout actions in extractor (#316))
       end
 
       def handle_response(report, sync_run)
@@ -119,9 +127,18 @@ module ReverseEtl
         sync_run.sync_records.where(id: failed_sync_records).update_all(status: "failed") # rubocop:disable Rails/SkipsModelValidations
       end
 
-      def heartbeat(activity)
-        activity.heartbeat
-        raise StandardError, "Cancel activity request received" if activity.cancel_requested
+      def heartbeat(activity, sync_run)
+        response = activity.heartbeat
+        return unless response.cancel_requested
+
+        sync_run.failed!
+        Rails.logger.error({
+          error_message: "Cancel activity request received",
+          sync_run_id: sync_run.id,
+          sync_id: sync_run.sync_id,
+          stack_trace: nil
+        }.to_s)
+        raise StandardError, "Cancel activity request received"
       end
 
       def log_error(sync_run)
